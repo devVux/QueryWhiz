@@ -1,0 +1,78 @@
+swagger: '2.0'
+info:
+  title: SQL Generator API
+  description: API to generate SQL queries based on user input.
+  version: '1.0'
+
+tags:
+  - name: Query Generation
+    description: Endpoints related to generating SQL queries
+
+paths:
+  /api/v0/:
+    post:
+      tags:
+        - Query Generation
+      summary: Generate an SQL query
+      description: This endpoint generates an SQL query based on the provided input using the Pydantic validated structure.
+
+      # Define the request body to accept custom input
+      parameters:
+        - in: body
+          name: body
+          description: JSON object containing `prompt` and `schema`
+          required: true
+          schema:
+            type: object
+            properties:
+              prompt:
+                type: string
+                description: The text prompt for generating the SQL query.
+                example: "Show all users older than 18"  # Example, but users can change it
+              schema:
+                type: string
+                description: The schema or database structure on which the query is based.
+                example: "user_database"  # Example, but users can change it
+      responses:
+        200:
+          description: SQL query successfully generated
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              data:
+                type: string
+                description: Generated SQL query
+                example: "SELECT * FROM users WHERE age > 18"
+        400:
+          description: Invalid request (e.g., validation error)
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              error:
+                type: array
+                description: List of validation errors
+                items:
+                  type: object
+                  properties:
+                    loc:
+                      type: array
+                      description: Location of the error (e.g., field)
+                      example: ["prompt"]
+                    msg:
+                      type: string
+                      description: Error message
+                      example: "str type expected"
+                    type:
+                      type: string
+                      description: Type of error
+                      example: "type_error.str"
+              message:
+                type: string
+                description: Description of the error
+                example: "Invalid request"
