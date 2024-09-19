@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from app.models.custom_models import UserRequest
+from app.core.base_request import UserRequest
 
 class Model:
 
@@ -14,4 +14,5 @@ class Model:
 class TestModel(Model):
 
 	def generate(self, data: UserRequest) -> str:
-		return f"This is a test for {data.prompt}"
+		return f"This is a test for `{data.prompt}`"
+
