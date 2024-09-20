@@ -6,10 +6,10 @@ from app.core.base_response import Response
 from app.core.base_request import UserRequest
 from app.core.base_model import TestModel
 
-from app.models.huggingface_model import DefogAI
+from app.models.huggingface_model import *
 
 api = Blueprint('query_whiz', __name__)
-model = DefogAI() 
+model = SlimSQL() 
 
 
 #@swag_from('../../docs/api.yaml')
