@@ -7,7 +7,6 @@ import torch
 class DefogAI(Model):
 
     def __init__(self):
-        # Load the tokenizer and model
         self.__tokenizer = AutoTokenizer.from_pretrained("defog/sqlcoder-7b-2")
         self.__model = AutoModelForCausalLM.from_pretrained("defog/sqlcoder-7b-2")
 
@@ -75,7 +74,7 @@ class SlimSQL(Model):
     def generate(self, data: UserRequest) -> str:
 
         # prepare prompt packaging used in fine-tuning process
-        new_prompt = "<human>: " + data.context + "keep in mind todays date is 09/19/2024 "+ "\n" + data.prompt + "\n" + "<bot>:"
+        new_prompt = "<human>: " + data.context + "\n" + data.prompt + "\n" + "<bot>:"
 
         inputs = self.__tokenizer(new_prompt, return_tensors="pt")  
         start_of_output = len(inputs.input_ids[0])

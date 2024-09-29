@@ -1,28 +1,17 @@
 from flask import Flask
 from flasgger import Swagger
 from app.api.whiz import api
+from settings import auto_config
 
 app = Flask(__name__)
+app.config.from_object(auto_config)
 
 
-template = {
-    "swagger": "2.0",
-    "info": {
-        "title": "Flask QueryWhiz API",
-        "description": "This API was developed using Python Flask, which provides an interface for producing and consuming messages via HTTP endpoints.",
-        "version": "1.0"
-    }
-}
-app.config['SWAGGER'] = {
-    'title': 'Flask QueryWhiz API',
-    'uiversion': 2,
-    'template': './resources/flasgger/swagger_ui.html'
-}
-Swagger(app, template=template)
+Swagger(app, template=auto_config.swaggerTemplate)
 
 
 app.register_blueprint(api, url_prefix='/api/v0')
 
 if __name__ == '__main__':
 
-    app.run(debug=True, use_reloader=False)
+    app.run(host='0.0.0.0', debug=True, use_reloader=False)

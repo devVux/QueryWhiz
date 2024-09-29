@@ -1,0 +1,17 @@
+
+version: '3.8'
+
+services:
+  flask-app:
+    build: .
+    expose:
+      - "5000"  # Expose the internal Flask port
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d/deafult.conf  # Mount Nginx config
+    ports:
+      - "80:80"  # Map port 80 on host to port 80 on Nginx
+    depends_on:
+      - flask-app  # Ensure Flask app starts before Nginx
