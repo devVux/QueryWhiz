@@ -16,12 +16,12 @@ model = TestModel()
 logger = LocalProxy(lambda: current_app.logger)
 CORS(api)
 
-@api.route('/', methods=['GET'])
-def test():
+@api.route('/status', methods=['GET'])
+def status():
     return 'ok'
 
 @swag_from('../../docs/generate.yaml')
-@api.route('/', methods=['POST'])
+@api.route('/generate', methods=['POST'])
 def generate():
 
     try:

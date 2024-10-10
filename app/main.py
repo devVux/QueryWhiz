@@ -10,8 +10,8 @@ app.config.from_object(auto_config)
 Swagger(app, template=auto_config.swaggerTemplate)
 
 
-app.register_blueprint(api, url_prefix='/api/v0')
+app.register_blueprint(api, url_prefix='/api/v1')
 
 if __name__ == '__main__':
 
-    app.run(host='0.0.0.0', debug=True, use_reloader=False)
+    app.run(host='0.0.0.0')

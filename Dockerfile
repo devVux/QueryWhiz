@@ -4,11 +4,12 @@ FROM python:3.9-slim
 WORKDIR /app
 
 COPY requirements.txt ./
-COPY nginx.conf /etc/nginx/nginx.conf
 
-#RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt
 
-COPY app/ ./app/
+COPY ./app ./app
+COPY ./settings ./settings
+COPY ./docs ./docs
 
 EXPOSE 5000
 
