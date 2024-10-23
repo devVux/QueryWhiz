@@ -14,5 +14,5 @@ class Model:
 class TestModel(Model):
 
 	def generate(self, data: UserRequest) -> str:
-		return f"This is a test for `{data.prompt}`"
+		return f"select 'This is a test for `{data.question}`' as answer"
 

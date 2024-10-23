@@ -1,31 +1,31 @@
-Generate an SQL query
+Genera una query SQL
 ---
 tags:
-  - Query Generation
+  - Generazione Query
 parameters:
   - in: body
     name: body
-    description: JSON object containing `prompt` and `context`
+    description: Oggetto JSON contenente `question` e `context`
     required: true
     schema:
       type: object
       properties:
-        prompt:
+        question:
           type: string
-          description: The text prompt for generating the SQL query.
-          example: "Show all users older than 18"
+          description: La domanda testuale per generare la query SQL.
+          example: "Mostra tutti gli utenti con età superiore a 18 anni"
         context:
           type: string
-          description: The schema on which the query is based.
+          description: Lo schema su cui si basa la query.
           example: "CREATE TABLE user(
-            userID int primary key,
-            name varchar(255) not null,
-            surname varchar(255) not null,
-            birthdate date not null
-          )"
+              userID int primary key,
+              name varchar(255) not null,
+              surname varchar(255) not null,
+              birthdate date not null
+            )"
 responses:
   200:
-    description: SQL query successfully generated
+    description: Query SQL generata con successo
     schema:
       type: object
       properties:
@@ -34,10 +34,10 @@ responses:
           example: true
         data:
           type: string
-          description: Generated SQL query
+          description: Query SQL generata
           example: "SELECT * FROM users WHERE age > 18"
   400:
-    description: Invalid request (e.g., validation error)
+    description: Richiesta non valida (ad esempio, errore di validazione)
     schema:
       type: object
       properties:
@@ -46,23 +46,23 @@ responses:
           example: false
         error:
           type: array
-          description: List of validation errors
+          description: Elenco degli errori di validazione
           items:
             type: object
             properties:
               loc:
                 type: array
-                description: Location of the error (e.g., field)
-                example: ["prompt"]
+                description: Posizione dell'errore (ad esempio, campo)
+                example: ["question"]
               msg:
                 type: string
-                description: Error message
-                example: "str type expected"
+                description: Messaggio di errore
+                example: "Str type expected"
               type:
                 type: string
-                description: Type of error
+                description: Tipo di errore
                 example: "type_error.str"
         message:
           type: string
-          description: Description of the error
-          example: "Invalid request"
+          description: Descrizione dell'errore
+          example: "Richiesta non valida"

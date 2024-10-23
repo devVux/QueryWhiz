@@ -16,10 +16,10 @@ class DefogAI(Model):
             print("Warning: GPU not available. Using CPU.")
 
     def generate(self, data: UserRequest) -> str:
-        question = data.prompt
+        question = data.question
         schema = data.context
 
-        prompt = f"""
+        question = f"""
             ### Task
             Generate a SQL query to answer [QUESTION]{question}[/QUESTION]
 
@@ -41,12 +41,12 @@ class DefogAI(Model):
             device=0 if torch.cuda.is_available() else -1,  # Use GPU if available
             max_new_tokens=300,
             do_sample=False,
-            return_full_text=False,  # Prevent splitting issues with prompt
+            return_full_text=False,  # Prevent splitting issues with question
             num_beams=5,  # Beam search with 5 beams for high-quality results
         )
         generated_query = (
             pipe(
-                prompt,
+                question,
                 num_return_sequences=1,
                 eos_token_id=eos_token_id,
                 pad_token_id=eos_token_id,
@@ -73,10 +73,10 @@ class SlimSQL(Model):
 
     def generate(self, data: UserRequest) -> str:
 
-        # prepare prompt packaging used in fine-tuning process
-        new_prompt = "<human>: " + data.context + "\n" + data.prompt + "\n" + "<bot>:"
+        # prepare question packaging used in fine-tuning process
+        new_question = "<human>: " + data.context + "\n" + data.question + "\n" + "<bot>:"
 
-        inputs = self.__tokenizer(new_prompt, return_tensors="pt")  
+        inputs = self.__tokenizer(new_question, return_tensors="pt")  
         start_of_output = len(inputs.input_ids[0])
 
         #   temperature: set at 0.3 for consistency of output

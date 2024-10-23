@@ -1,17 +1,17 @@
-from settings.config import Local, Production, Staging
+from settings.config import Local, Staging
+from dotenv import load_dotenv
 import os
 
-config_space = os.getenv('CONFIG_SPACE', 'LOCAL')
-if config_space:
-    if config_space == 'LOCAL':
-        print('local config')
-        auto_config = Local()
-    elif config_space == 'STAGING':
-        auto_config = Staging()
-    elif config_space == 'PRODUCTION':
-        auto_config = Production()
-    else:
-        auto_config = None
-        raise EnvironmentError(f'CONFIG_SPACE is unexpected value: {config_space}')
-else:
-    raise ValueError('CONFIG_SPACE environment variable is not set!')
+load_dotenv()
+
+config_space = os.getenv('CONFIG_SPACE', 'LOCAL').upper()
+
+config_mapping = {
+    'LOCAL': Local,
+    'PRODUCTION': Production
+}
+
+auto_config = config_mapping.get(config_space)
+
+if auto_config is None:
+    raise EnvironmentError(f'CONFIG_SPACE is an unexpected value: {config_space}')

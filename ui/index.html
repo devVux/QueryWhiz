@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Query Whiz</title>
+	<script src="https://cdn.jsdelivr.net/npm/alasql@4"></script>
+	<link href="style.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+	<div style="margin: auto; width: 50%; height: 50%">
+		<h3>Your schema here</h3>
+		<textarea type="text" id="schemaInput">
+CREATE TABLE articoli(
+	name: VARCHAR(50), 
+	price: NUMERIC(9,2), 
+	quantity: NUMERIC, 
+	rating: NUMERIC, 
+);
+		</textarea>
+	<div>
+
+	<!-- Button to toggle chat box -->
+	<button id="chatToggle" class="chat-toggle" onclick="toggleChat()">
+		<span class="material-symbols-outlined">smart_toy</span>
+	</button>
+
+	<div id="chatContainer" class="chat-container">
+		<div class="chat-header">
+			<img src="assets/logo.png" width="64px" height="64px">
+			<button class="close-button" onclick="toggleChat()">
+				<span class="material-symbols-outlined">close</span>
+			</button>
+		</div>
+
+		<div id="chatHistory">
+
+			<div class="message-bot">
+				Ciao, come posso aiutarti?
+				<div class="options">
+					<span class="material-symbols-outlined" onclick="copyMessage(this)">content_copy</span>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="input-container">
+			<textarea type="text" id="messageInput" placeholder="Chiedi qualcosa..." rows="1"></textarea>
+			<button id="sendButton" class="send-icon"	>
+				<span class="material-symbols-outlined">arrow_upward</span>
+			</button>
+		</div>
+
+	</div>
+
+	<!-- Overlay to obscure the page -->
+	<div class="overlay" id="overlay" onclick="toggleChat()"></div>
+
+	<script src="js/constants.js"></script>
+	<script src="js/utils.js"></script>
+	<script src="js/domHandlers.js"></script>
+	<script src="js/eventListeners.js"></script>
+	<script src="js/core/responseGenerator.js" type="module"></script>
+	<script src="js/core/queryApplier.js" type="module"></script>
+	<script src="js/core/messageController.js" type="module"></script>
+	<script src="js/app.js" type="module"></script>
+
+</body>
+
+</html>

@@ -37,6 +37,3 @@ class Local(Common):
 
 class Production(Common):
     DEBUG = False
-
-class Staging(Production):
-    DEBUG = True
