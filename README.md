@@ -19,3 +19,9 @@ Per visualizzare l'interfaccia su browser, recarsi in `/ui` ed eseguire
 ```sh
 python -m http.server -d .
 ```
+
+### Eseguire i test
+Da terminale eseguire il seguente comando:
+```sh
+python -m pytest -v
+```
