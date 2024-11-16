@@ -23,17 +23,21 @@ def status():
 @swag_from('../../docs/generate.yaml')
 @api.route('/generate', methods=['POST'])
 def generate():
-
     try:
-
         data = request.get_json()
-        validated_data = UserRequest(**data)
+        validated_data = UserRequest(**data)  # Validazione del payload tramite Pydantic
 
-        sql_query = model.generate(validated_data)
+        sql_query = model.generate(validated_data)  # Generazione della query SQL
+
         logger.debug(validated_data)
         logger.debug(sql_query)
 
         return Response.success(data=sql_query)
 
     except ValidationError as e:
-        return Response.error(e.errors(), "Invalid request")
+        return Response.error(details=e.errors(), message="Invalid request", code=400)
+
+    except Exception as e:
+        logger.error("Unhandled exception in generate", exc_info=e)
+        return Response.error(details=str(e), message="Internal server error", code=500)
+
