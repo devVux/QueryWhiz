@@ -35,7 +35,7 @@ responses:
         data:
           type: string
           description: Query SQL generata
-          example: "SELECT * FROM users WHERE age > 18"
+          example: "SELECT * FROM user WHERE DATE_PART('year', AGE(birthdate)) > 18;"
   400:
     description: Richiesta non valida (ad esempio, errore di validazione)
     schema:
